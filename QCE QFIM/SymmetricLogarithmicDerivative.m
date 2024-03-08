@@ -1,26 +1,21 @@
-clear
+% Computes the SLD modes for making a generally quantum optimal
+% measurement. The optimality is verified by computing the SLD CFI.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Author(s): Nico Deshler, University of Arizona
+% Affiliation(s): Wyant College of Optical Sciences, University of Arizona
+% Date: March 7, 2024
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % setup the star-planet system parameters
-rl = 1.22*pi/(2*pi); % Rayleigh length
-dr = rl/1000;        % step size in star-planet separation   
-r_delta = (rl*.01):dr:(rl*2); % star-planet separation
+rl = 1.22/2;                    % Rayleigh length
+dr = rl/1000;                   % step size in star-planet separation   
+r_delta = (rl*.01):dr:(rl*2);   % star-planet separation
 r_delta = permute(r_delta,[3,1,2]);
-phi_delta = pi/4;   % star-planet angle
-b = 1e-6;
+phi_delta = pi/4;               % star-planet angle
+b = 1e-6;                       % contrast
 
 % compute SLD mode probabilities
 P = SLDModeProb(r_delta, phi_delta, b);
-
-
-%{
-logP  = log(P);
-
-dlogP = diff(logP,1,3)./dr;
-
-CFI_per_mode = (dlogP).^2 .*P(:,:,1:end-1);
-
-CFI = sum(CFI_per_mode,2);
-%}
 
 
 % compute SLD mode CFI
@@ -33,7 +28,6 @@ CFI = sum(CFI_per_mode,2);
 delta_p = 1 - 2*b;
 QFI_rr = (1-delta_p.^2)*pi^2 - 4*(1-delta_p.^2).*delta_p.^2 ...
       .*(besselj(2,2*pi*r_delta)./(r_delta)).^2;
-
 
 
 % show probabilities by mode
@@ -84,7 +78,7 @@ title(leg,'SLD mode')
 W = GramMatrix(r_delta);
 SLD_mat = POVM(W,b);
 
-
+mkdir('Figures')
 v= VideoWriter('Figures/SLD_eigenmodes','MPEG-4');
 v.FrameRate = 100;
 open(v);

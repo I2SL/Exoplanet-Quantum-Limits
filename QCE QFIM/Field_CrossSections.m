@@ -1,3 +1,12 @@
+% A figure showing the field cross sections for in the pupil and image
+% planes for a star-planet system with optical axis aligned to the
+% intensity centroid.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Author(s): Nico Deshler, University of Arizona
+% Affiliation(s): Wyant College of Optical Sciences, University of Arizona
+% Date: March 7, 2024
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Change interpreters to latex
 set(groot,'defaultAxesTickLabelInterpreter','latex'); 
@@ -57,7 +66,6 @@ xlabel({'$\mathbf{r}\cdot\bar{\mathbf{r}}_{\Delta}$','Cross-Section Over Image P
 ylabel({'Field Amplitude Profile'},'interpreter','latex')
 leg = legend('Star','Planet');
 leg.Location = 'northwest';
-leg.Location
 
 
 
