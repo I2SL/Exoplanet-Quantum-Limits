@@ -1,11 +1,17 @@
+% Plots the Classical Fisher Information curves for all coronagraphs
+%
+% Author(s): Nico Deshler, University of Arizona
+% Affiliation(s): Wyant College of Optical Sciences, University of Arizona
+% Date: March 7, 2024
+
 % load the CFI data
-clear
-load('CoronagraphCFI_FINAL2.mat')
+load('CoronagraphCFI.mat')
 
 % make figure
 figure;
 tiledlayout(2,numel(b))
 
+% coronagraph line colors
 c = [
     [0.7216 0.1216 0.2235]
     [0.9290 0.6940 0.1250]
@@ -44,7 +50,7 @@ for i = 1:numel(b)
 
 
 
-    % plot the normalized angular CFI
+    % plot the normalized angular CFI curves
     nexttile(i+numel(b))
     hold on
     plot(r_delta/rl, QFI_a(i,:)/(1-kappa(i)^2)/pi^2,'k','LineWidth',1.5)
@@ -73,5 +79,3 @@ for i = 1:numel(b)
 
 
 end
-
-%set(gcf,'Position',[0.6873    0.1187    0.2177    0.3200])

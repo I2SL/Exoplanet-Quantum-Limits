@@ -1,4 +1,6 @@
 function [psi, Psi] = PropagatePIAACMC(Psi,X,Y,Kx,Ky)
+    % Propagates the fields psi through the PIAACMC
+    % 
     %----------------------------------------------------
     %-------------------- INPUTS ------------------------
     %----------------------------------------------------
@@ -10,7 +12,13 @@ function [psi, Psi] = PropagatePIAACMC(Psi,X,Y,Kx,Ky)
     %----------------------------------------------------
     % psi : output field(s) on image plane
     % Psi : output field(s) at secondary pupil (after Lyot stop)
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Author(s): Nico Deshler, University of Arizona
+    % Affiliation(s): Wyant College of Optical Sciences, University of Arizona
+    % Date: March 7, 2024
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+    
     % ----------------------------------------------------
     % dimensions
     [N,~] = size(X);

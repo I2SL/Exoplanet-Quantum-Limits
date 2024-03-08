@@ -8,10 +8,16 @@ function Psi = PIAACMCapodization(Psi)
 % The implementation here follows from the relations given in appendix C of
 % Soummer et. al. 2003, "Stellar Coronagraphy with prolate apodized
 % circular apertures"
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Author(s): Nico Deshler, University of Arizona
+% Affiliation(s): Wyant College of Optical Sciences, University of Arizona
+% Date: March 7, 2024
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% dimensions of pupil field
 ndim = size(Psi,1);
 
-
+% constants
 isodd = mod(ndim,2);
 a = 1.06;
 u = linspace(0,.5,round(ndim/2));
@@ -30,7 +36,7 @@ M = (2*pi)^2 .* u .* K0 * du;
 pupil_apodization = U(:,idx);
 
 %{
-% plot the radial appodization function over a circular pupil
+% UNCOMMENT TO PLOT THE RADIAL APODIZATION FUNCTION OVER THE PUPIL
 plot([r; D/2; 3/4 * D ], [pupil_apodization/pupil_apodization(r==0);0;0],'k','LineWidth',1.5)
 ylim([0,1.2])
 xlim([0,.75])
@@ -43,7 +49,6 @@ ylabel('PIAACMC Pupil Apodization')
 % 2D pupil apodization
 
 % interpolate radial apodization function around 2pi radians
-
 M = sqrt(r.^2+r'.^2); % dummy matrix of different radii from origin
 M = reshape(M, [1, length(r)^2]); % make into 1D list
 A = interp1(r, pupil_apodization, M,'spline',0); % interpolate onto 1D list
@@ -53,11 +58,6 @@ A = reshape(A, [length(r),length(r)]); % make back into array
 A = [rot90(A(:,(1+isodd):end)); A];
 A = [rot90(rot90(A(:,(1+isodd):end))) A];
 
-% exploit GPU
-if gpuDeviceCount("available") > 0
-    A = gpuArray(A);
-end
-
 
 % apply apodizer to pupil plane field while ensuring energy throughput
 % preserved
@@ -66,48 +66,3 @@ Psi = A .* Psi;
 Psi = Psi .* sqrt(energy ./ sum(conj(Psi).*Psi,[1,2])); % preserve energy after apodization
 
 end
-
-
-
-%%
-
-
-%{
-% NUMERICALLY PRECISE VERSION (NOT WORKING BECAUSE BASE CASES OF RECURRENCE
-RELATION IS UNKOWN)
-c = pi * 1.06 / 2;
-
-% terms for recursion relations
-gamma0 = 1/2;
-gamma_p1 = @(n) - (n+1)^2 / (2*n+1) / (2*n+2);
-gamma_m1 = @(n) - n^2 / (2 * n) / (2*n + 1);
-chi = @(n) (2*n + .5)*(2*n + 1.5);
-chi0 = 1;
-
-d = [1;
-     0];
-
-% max expansion order
-K_max = 10;
-
-rho = zeros(size(R));
-
-for k = 0:K_max
-    
-    % radial function expansion
-    Tk = hypergeom([-k,k+1],1, ( 2 * R / D).^2) .* ( 2 * R / D).^(.5);
-
-    % recursion projector
-    Pk = [-(c^2 * gamma0 + chi(k-1) - chi0) / c^2 / gamma_m1(k),...
-         -( c^2 * gamma_p1(k-2)) / c^2 / gamma_m1(k);
-            1, 0];
-
-    d =  Pk * d;
-
-    % update apodizer
-    rho = rho + d(1) * Tk;
-end
-
-A = sqrt(2*eigenvalue / D) * rho ./ sqrt(R);
-end
-%}

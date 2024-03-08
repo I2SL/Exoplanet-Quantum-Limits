@@ -1,8 +1,18 @@
 function fz_nm = FourierZernike(r,th,n,m)
+    % Computes the Fourier Transform of the Zernike modes 
+    % at the focal plane of a circular pupil
+    %
+    % r,th:     [N,1] vector of positions polar coordinates
+    % n,m:      [1,M] vector of mode indices
+    %
+    % Author(s): Nico Deshler, University of Arizona
+    % Affiliation(s): Wyant College of Optical Sciences, University of Arizona
+    % Date: March 7, 2024
+    
     fz_nm = (-1).^(n/2 + abs(m)) .* sqrt(n+1) .* FZRadial(r,n) .* FZAzimuthal(th,m);
 end
 
-function u = FZRadial(r,n)
+function z = FZRadial(r,n)
     % Computes the radial function of the Fourier Transformed Zernikes
     nn = repmat(n,[size(r,1),1,size(r,3)]);
     rr = repmat(r,[1,size(n,2),1]);
@@ -15,7 +25,7 @@ function u = FZRadial(r,n)
     J(r==0 , n+1 > 1) = 0;
     
     % radial function
-    u = J;
+    z = J;
 end
 
 function v = FZAzimuthal(th,m)

@@ -1,4 +1,6 @@
 function psi = PropagatePC_singlesource(psi,X,Y,xs,ys)
+    % Propagates the field induced by a single point source
+    % through the perfect coronagraph.
     %----------------------------------------------------
     %-------------------- INPUTS ------------------------
     %----------------------------------------------------
@@ -9,6 +11,11 @@ function psi = PropagatePC_singlesource(psi,X,Y,xs,ys)
     %-------------------- OUTPUTS -----------------------
     %----------------------------------------------------
     % psi : output field(s) on image plane
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Author(s): Nico Deshler, University of Arizona
+    % Affiliation(s): Wyant College of Optical Sciences, University of Arizona
+    % Date: March 7, 2024
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % cartesian to polar coordinates
     [Th,R]  = cart2pol(X,Y);

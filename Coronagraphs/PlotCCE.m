@@ -1,21 +1,28 @@
-%load('CoronagraphData_FINAL2','P_PI','P_VC','b','d2x','r_delta','rl')
-%b = b.';
+% Plots the Classical Chernoff Exponent curves for all coronagraphs
+%
+% Author(s): Nico Deshler, University of Arizona
+% Affiliation(s): Wyant College of Optical Sciences, University of Arizona
+% Date: March 7, 2024
+
+
+% load data
+load('CoronagraphData.mat','P_PI','P_VC','b','d2x','r_delta','rl')
 
 % quantum chernoff exponent
 gamma = @(r) besselj(1,2*pi*r) ./ (pi*r);   % autocorrelation function
-r_e = (1-b).*r_delta;
-r_s = b.*r_delta;
-xi_Q = - log((1-b) .* gamma(r_s).^2 + b .* gamma(r_e).^2);
+r_e = (1-b').*r_delta;
+r_s = b'.*r_delta;
+xi_Q = - log((1-b') .* gamma(r_s).^2 + b' .* gamma(r_e).^2);
 xi_Q(xi_Q < 0) = 0; % correct numerical error
 
-% direct-imaging coronagraphs Classical Cehrnoff Exoponents
-xi_PC = xi_Q;
-xi_SP = xi_Q;
-xi_PI = permute(-log(1-d2x*sum(P_PI(:,:,:,:,1),[1,2])),[3,4,1,2]);
-xi_VC = permute(-log(1-d2x*sum(P_VC(:,:,:,:,1),[1,2])),[3,4,1,2]);
+% direct-imaging coronagraphs Classical Chernoff Exoponents
+xi_SP = xi_Q;   % SPADE
+xi_PC = xi_Q;   % Perfect Coronagraph
+xi_PI = permute(-log(1-d2x*sum(P_PI(:,:,:,:,1),[1,2])),[3,4,1,2]);  % PIAACMC
+xi_VC = permute(-log(1-d2x*sum(P_VC(:,:,:,:,1),[1,2])),[3,4,1,2]);  % Vortex
 
 
-
+% coronagraph line colors
 c = [
     [0.7216 0.1216 0.2235]
     [0.9290 0.6940 0.1250]
@@ -51,7 +58,7 @@ for i = 1:numel(b)
     
     ylim([0,1.1])
     xlim([min(r_delta/rl),max(r_delta/rl)])
-    %set(gca,'YScale','log')
+    set(gca,'YScale','log')
     set(gca,'XScale','log')
 
     axis square

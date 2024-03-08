@@ -1,5 +1,13 @@
-% process coronagraph data to display radial and angular CFI
-load('CoronagraphData_FINAL2.mat')
+% Process coronagraph data to get radial and angular CFI. This script
+% computes the numerical derivatives of the direct imaging probability
+% distrubtions and calculates the CFI for the radial and angular estimation
+% parameters as a function of their separation.
+%
+% Author(s): Nico Deshler, University of Arizona
+% Affiliation(s): Wyant College of Optical Sciences, University of Arizona
+% Date: March 7, 2024
+
+load('CoronagraphData.mat')
 
 
 % get squared partial derivative w.r.t radius
@@ -125,7 +133,7 @@ QFI_a = (1-kappa.'.^2)*pi^2 .* ((r_delta.^2));
 
 
 %% SAVE
-save('CoronagraphCFI_FINAL2.mat','QFI_r','QFI_a',...
+save('CoronagraphCFI.mat','QFI_r','QFI_a',...
                                  'SP_CFIr','SP_CFIa',...
                                  'PC_CFIr','PC_CFIa',...
                                  'PI_CFIr','PI_CFIa',...

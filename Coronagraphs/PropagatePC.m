@@ -1,4 +1,5 @@
 function psi = PropagatePC(psi,X,Y)
+    % Propagates the fields psi through the perfect coronagraph.
     %----------------------------------------------------
     %-------------------- INPUTS ------------------------
     %----------------------------------------------------
@@ -8,12 +9,15 @@ function psi = PropagatePC(psi,X,Y)
     %-------------------- OUTPUTS -----------------------
     %----------------------------------------------------
     % psi : output field(s) on image plane
-
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Author(s): Nico Deshler, University of Arizona
+    % Affiliation(s): Wyant College of Optical Sciences, University of Arizona
+    % Date: March 7, 2024
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % ----------------------------------------------------
     % dimensions
     [N,~,D] = size(psi);
-    %[M,~] = size(Kx);
 
     % differentials
     d2x = (X(1,2) - X(1,1))^2;
@@ -29,11 +33,7 @@ function psi = PropagatePC(psi,X,Y)
     psi = reshape(psi,[N^2,D]);
     psi = psi - psf'*psi*d2x .* psf;
 
-    % fourier transform to get pupil field
-    %Psi = ctsIFT_2D(Kx(:), Ky(:), X(:), Y(:), d2x, psi);
-
     % reshape outputs
     psi = reshape(psi,[N,N,D]);
-    %Psi = reshape(Psi,[M,M,D]);
 end
 
