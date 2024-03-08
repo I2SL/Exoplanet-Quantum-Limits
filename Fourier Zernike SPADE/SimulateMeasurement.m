@@ -1,16 +1,25 @@
 function [mode_count,varargout] = SimulateMeasurement(mu_pho,p,varargin)
-    % mu_pho - mean photon number 
-    % p - modal probability distribution (PMF)
+    % ----------------
+    % Required Inputs:
+    % ---------------
+    % mu_pho            - mean photon number 
+    % p                 - modal probability distribution (PMF)
     % 
     % ----------------
     % Optional Inputs:
     % ----------------
-    % quant_eff          -  a scalar between 0 and 1 (inclusive) indicating the efficiency with which detector converts photons into electrons
+    % quant_eff         -  a scalar between 0 and 1 (inclusive) indicating the efficiency with which detector converts photons into electrons
     % poiss_flag        -   trigger for sampling the the number of collected photons from a poisson distribution
     % dark_lambda       -   poisson rate of dark current at each photon counter
     % read_noise_sigma  -   standard deviation for zero-mean gaussian random variable modelling the read noise in the photoelectric conversion process
     % crosstalk_mtx     -   symmetric matrix representing the leakage between modes. Columns and rows of matrix must sum to 1. 
-    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Author(s): Nico Deshler, University of Arizona
+    % Affiliation(s): Wyant College of Optical Sciences, University of Arizona
+    % Date: March 7, 2024
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
     
     %%%%%%%%%%%%%%%%% Parser %%%%%%%%%%%%%%%%%%%%%%%%%%
 

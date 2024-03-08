@@ -1,10 +1,15 @@
 function [s_x,s_y] = MLESourceCoords(X,Y,Q,src_coords,method)
-% Returns the MLE source coordinates for the supplied Q function.
+    % Returns the MLE source coordinates for the supplied Q function.
     %
     % X,Y - Coordinate matrices of dimension NxN
     % Q - matrix stack of dimensions NxNxsrc_num
     % src_coords - ground truth constellation coordinates
     % method - ['Heuristic','MinError','Both']
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Author(s): Nico Deshler, University of Arizona
+    % Affiliation(s): Wyant College of Optical Sciences, University of Arizona
+    % Date: March 7, 2024
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     src_num = size(Q,3);    % number of sources
     
@@ -64,7 +69,7 @@ function [s_x,s_y] = MLESourceCoords(X,Y,Q,src_coords,method)
             s_y = constellations(:,2,sel_i);
             
             %{
-            % visualize
+            % UNCOMMENT FOR DEBUGGING VISUALIZATION
             figure
             hold on
             scatter(src_coords(:,1),src_coords(:,2),'filled','black')
@@ -92,7 +97,7 @@ function [s_x,s_y] = MLESourceCoords(X,Y,Q,src_coords,method)
             
             % select from the final degenerate solutions based on minimum error solution (this is cheating a bit)
             % there are always 2 reflection symmetric solutions at the end.
-            % This step just chooses one of the two reflections. You could
+            % This step just chooses one of the two reflections. One could
             % argue that this step is valid if the second moments
             % of the constellation along x and y are pre-estimated
             % using direct detection.
@@ -108,6 +113,7 @@ function [s_x,s_y] = MLESourceCoords(X,Y,Q,src_coords,method)
     
     
     %{
+    % UNCOMMENT FOR DEBUGGING VISUALIZATION
     num_constellations = size(constellations,3);
     f =  factor(num_constellations);
     half_point = floor(numel(f)/2);

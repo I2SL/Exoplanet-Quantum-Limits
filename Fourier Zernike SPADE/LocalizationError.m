@@ -1,6 +1,13 @@
 function err = LocalizationError(xy_src,xy_est)
     % Computes the average localization error per source for a given
-    % estimate of the constellation
+    % estimate of the constellation.
+    %
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Author(s): Nico Deshler, University of Arizona
+    % Affiliation(s): Wyant College of Optical Sciences, University of Arizona
+    % Date: March 7, 2024
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
     
     % calculate the total error distance between all possible pairings of
     % the ground truth sources and the estimated sources
