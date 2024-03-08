@@ -21,7 +21,7 @@ abstract: >-
   theoretic quantities related to exoplanet detection and
   localization. It contains several physical optics
   propagators for numerically simulating an optical field
-  traversing through four coronagraphic imaging systems: (1)
+  traversing through three coronagraphic imaging systems: (1)
   Perfect Coronagraph, (2) Phase-Induced Amplituded
   Apodization Complex Mask Coronagraph, (3) Vortex
   Coronagraph. In this packaged we also provide an
